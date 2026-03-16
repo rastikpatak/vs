@@ -1,29 +1,50 @@
 <html>  
     <head> 
         <title> title </title>
-        
 
     </head>
     <body>
         <h1>nieco</h1>
         <p>text</p>
-        <div id="mojd"> najn</div>
-        <img scr="" width="125px">
+        <div id="mojd"></div>
+        <img src="https://pbs.twimg.com/profile_images/1289129287677870080/adHnfq1__400x400.jpg" width="200">
 
         <script type="text/javascript">
             console.log("ide to")
             const mojd =
                 document.getElementById("mojd")
-            mojd.textContent = "jsc"
-            setTimeout(
-            mojd.style.backgroundColor = "red",200)
-                setInterval(() => {
-                    mojd.style.backgroundColor = "blue"
-                }, 200)
+            //mojd.textContent = "jsc"
+            setTimeout(function() {
+                mojd.style.backgroundColor = "red";
+            }, 200)
+            setInterval(() => {
+                mojd.style.backgroundColor = "yellow"
+            }, 200)
+            raw_odp =fetch("https://boozeapi.com/api/v1/cocktails")
+            .then((raw_odp) => {console.log("odpoved.data")})
+            
+            // stiahne odpovedd z BoozeAPI
+            fetch("https://boozeapi.com/api/v1/cocktails")
+            .then((odpoved_raw) => {
+                odpoved_raw.json().then((odpoved) => {
+                    // dekoduje odpoved (a vypise do konzole)
+                    console.log(odpoved.data)
 
-                setInterval(() => {
-                    mojd.style.backgroundColor = "yellow"
-                }, 200)
+                    // pre kazdy drink vyrobi <img> element a pripoji do mojDivVJs
+                    odpoved.data.forEach((drink) => {
+                        const drinkImg = document.createElement("img")
+                        drinkImg.src = drink.image
+                        drinkImg.width = 200
+                        drinkImg.height = 220
+                        drinkImg.style.display = "grid"
+
+                        //drinkImg -fit=cover;
+
+                        // pripoji ("append") ako dieta do mojDivVJs
+                        mojd.appendChild(drinkImg)
+                })
+            })
+        })
 
 
         </script> 
